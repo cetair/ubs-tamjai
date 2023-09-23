@@ -81,18 +81,25 @@ def getNextProbableWords():
     logging.info(result)
     return result
 
-def count_number(arr, target): 
-    if target == 0: 
+def count_number(arr, target, dict={}): 
+    if target == 0:
         return 1
 
-    if target < 0 or len(arr) == 0: 
+    if target < 0 or len(arr) == 0:
         return 0
-    
+
+    if (tuple(arr), target) in dict:
+        return dict[(tuple(arr), target)]
+
     curr = arr[0]
     remain = arr[1:]
-    num_curr = count_number(arr, target-curr)
-    num = count_number(remain, target)
-    return num + num_curr 
+
+    num_curr = count_number(arr, target - curr, dict)
+    num = count_number(remain, target, dict)
+
+    dict[(tuple(arr), target)] = num + num_curr
+
+    return dict[(tuple(arr), target)]
 
 @app.route('/railway-builder', methods=['POST'])
 def railwayBuilder(): 
