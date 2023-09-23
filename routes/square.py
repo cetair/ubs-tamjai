@@ -148,7 +148,7 @@ def teleportation():
         sum += dist[k]
     return json.dumps(sum)
 
-@app.route('/chinese-wall', methods=['POST'])
+@app.route('/chinese-wall', methods=['GET'])
 def result():
     return { 
         "1": "Fluffy",
