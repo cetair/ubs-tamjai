@@ -123,25 +123,24 @@ def railwayBuilder():
         
     return json.dumps(result)
 
+import numpy as np
+
 def euclidean_distance(point1, point2):
     x1, y1 = point1
     x2, y2 = point2
-    return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+    return np.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
 @app.route('/teleportation', methods=['POST'])
-def teleportation():
+def teleportation(p, q):
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     k = data.get("k")
     p = data.get("p")
     q = data.get("q")
-    dist = 0
-    distances = [[euclidean_distance(px, qy) for qy in q] for px in p]
-
-    for i in range(len(q)):
-        temp = min(distances[j][i] for j in range(len(p)))
-        dist += temp
-
-    return json.dumps(dist)
+    p = np.array(p)
+    q = np.array(q)
+    distances = np.sqrt(np.sum((p[:, np.newaxis] - q) ** 2, axis=2))
+    dist = np.min(distances, axis=0).sum()
+    return dist
 
 @app.route('/chinese-wall', methods=['GET'])
 def result():
