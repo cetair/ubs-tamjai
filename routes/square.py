@@ -135,13 +135,18 @@ def teleportation():
     p = data.get("p")
     q = data.get("q")
     dist = []
+    distances = [[euclidean_distance(px, qy) for qy in q] for px in p]
+
     for i in range(len(q)):
-        temp = 9999
-        for j in range(len(p)):
-            distance = euclidean_distance(p[j], q[i])
-            if (distance < temp): 
-                temp = distance 
+        temp = min(distances[j][i] for j in range(len(p)))
         dist.append(temp)
+    # for i in range(len(q)):
+    #     temp = 9999
+    #     for j in range(len(p)):
+    #         distance = euclidean_distance(p[j], q[i])
+    #         if (distance < temp): 
+    #             temp = distance 
+    #     dist.append(temp)
     
     sum = 0
     for k in range(len(dist)):
