@@ -147,3 +147,13 @@ def teleportation():
     for k in range(len(dist)):
         sum += dist[k]
     return json.dumps(sum)
+
+@app.route('/chinese-wall', methods=['POST'])
+def result():
+    return { 
+        "1": "Fluffy",
+        "2": "Galactic",
+        "3": "Mangoes",
+        "4": "Subatomic",
+        "5": "Monkey",
+    }
