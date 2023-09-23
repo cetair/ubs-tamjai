@@ -122,3 +122,28 @@ def railwayBuilder():
             result.append(res)
         
     return json.dumps(result)
+
+def euclidean_distance(point1, point2):
+    x1, y1 = point1
+    x2, y2 = point2
+    return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+@app.route('/teleportation', methods=['POST'])
+def teleportation():
+    data = request.get_json()
+    logging.info("data sent for evaluation {}".format(data))
+    k = data.get("k")
+    p = data.get("p")
+    q = data.get("q")
+    dist = []
+    for i in range(len(q)):
+        temp = 9999
+        for j in range(len(p)):
+            distance = euclidean_distance(p[j], q[i])
+            if (distance < temp): 
+                temp = distance 
+        dist.append(temp)
+    
+    sum = 0
+    for k in range(len(dist)):
+        sum += dist[k]
+    return json.dumps(sum)
