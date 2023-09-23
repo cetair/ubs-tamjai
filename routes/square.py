@@ -98,12 +98,11 @@ def count_number(arr, target):
 def railwayBuilder(): 
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
-    input = data.get("input")
     # input = ["5,3,2,1,4", "3,3,4,1,2", "11,1,2", "71,7,1,2,3,4,5,6,7"]
     result = []
     # case where target sum or diff types is 0 
-    for i in range(len(input)): 
-        temp = input[i].split(",")
+    for i in range(len(data)): 
+        temp = data[i].split(",")
         for j in range(len(temp)):
             temp[j] = int(temp[j])
         if temp[0] <= 0 or temp[1] <= 0:
